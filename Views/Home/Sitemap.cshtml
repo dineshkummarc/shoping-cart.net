@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Sitemap";
+}
+
+<h2>Site map</h2>
+<div class="container categories ">
+    <ul>
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>
+            @Html.ActionLink("Cataog", "Index", "Catalog")
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a href="/MVc_Assignment2/Catalog/List/@item.CategoryID">
+                        @item.Title
+                    </a>
+                </li>
+            }
+        </ul>
+    </li>
+    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+</ul>
+</div>

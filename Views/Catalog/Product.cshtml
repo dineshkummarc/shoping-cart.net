@@ -1,0 +1,39 @@
+﻿@model MVc_Assignment2.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<fieldset>
+    <legend>Catagory @Html.DisplayFor(model => model.Category.Title)</legend>
+
+    <div class="container catalog ">
+        <div class="row ">
+            <div class=" col-md-6 col-sm-6 col-xs-12">
+                <img src="@Html.DisplayFor(model => model.ImageUrl)" align="left" width="280" height="280" />
+            </div>
+            <div class="col-md-5 col-sm-5 col-xs-12 col-md-offset-1 col-xs-offset-0">
+                <div>
+                    <h2>@Html.DisplayFor(model => model.Title)</h2>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.ShortDescription)
+                    </div>
+                    <div class="display-field">
+                        @Html.TextBox("pquantity", 1, new { @class = "pquantity" })
+                        @Html.DisplayFor(model => model.Price)
+                    </div>
+                </div>
+                <hr />
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.LongDescription)
+                </div>
+                <hr />
+            </div>
+        </div>
+    </div>
+
+</fieldset>
+<p>
+    @Html.ActionLink("Back to List", "List/" + @Html.DisplayFor(model => model.CategoryID))
+</p>

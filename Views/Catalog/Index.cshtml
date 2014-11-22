@@ -1,0 +1,21 @@
+﻿@model IEnumerable<MVc_Assignment2.Category>
+
+@{
+    ViewBag.Title = "Catalog";
+}
+
+<h1>Catalog</h1>
+<div class="container categories ">
+    <div class="row ">
+        @foreach (var item in Model)
+        {
+            <a href="/MVc_Assignment2/Catalog/List/@item.CategoryID" title="@Html.DisplayFor(modelItem => item.Title) - see products">
+                <div class="one col-md-3 col-sm-6 col-xs-6">
+                    <img src="/MVc_Assignment2/@Html.DisplayFor(modelItem => item.ImageUrl)" width="100" height="100" />
+                    <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                </div>
+            </a>
+        }
+
+    </div>
+</div>

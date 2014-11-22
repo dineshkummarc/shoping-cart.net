@@ -1,0 +1,183 @@
+﻿@model MVc_Assignment2.OrdersModels
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h1>Checkout</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Order</legend>
+        <h2>Shipment Details</h2>
+        <div class="container checkout">
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.FName)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.FName)
+                    @Html.ValidationMessageFor(model => model.FName)
+                </div>
+            </div>
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.LName)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.LName)
+                    @Html.ValidationMessageFor(model => model.LName)
+                </div>
+            </div>
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.Address)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.Address)
+                    @Html.ValidationMessageFor(model => model.Address)
+                </div>
+            </div>
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.City)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.City)
+                    @Html.ValidationMessageFor(model => model.City)
+                </div>
+            </div>
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.State)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.State)
+                    @Html.ValidationMessageFor(model => model.State)
+                </div>
+            </div>
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.Zipcode)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.Zipcode)
+                    @Html.ValidationMessageFor(model => model.Zipcode)
+                </div>
+            </div>
+        </div>
+        <style type="text/css" media="screen">
+            .has-error input {
+                border-width: 2px;
+            }
+
+            .validation.text-danger:after {
+                content: ' - Validation failed';
+            }
+
+            .validation.text-success:after {
+                content: ' - Validation passed';
+            }
+        </style>
+        <h2 class="validation">Creadit Card Details</h2>
+        <div class="container">
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.CCName)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.CCName)
+                    @Html.ValidationMessageFor(model => model.CCName)
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.CCNumber)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.CCNumber)
+                    @Html.ValidationMessageFor(model => model.CCNumber)
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.CCDate)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.CCDate)
+                    @Html.ValidationMessageFor(model => model.CCDate)
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="editor-label col-md-offset-1 col-md-2  col-sm-2 col-xs-12">
+                    @Html.LabelFor(model => model.CCV)
+                </div>
+                <div class="editor-field  col-md-5 col-sm-5 col-xs-12">
+                    @Html.EditorFor(model => model.CCV)
+                    @Html.ValidationMessageFor(model => model.CCV)
+                </div>
+            </div>
+
+            <div class="CCBrand"></div>
+            <input id="numeric" type="hidden" class="input-lg form-control" data-numeric>
+
+            <script>
+                jQuery(function ($) {
+                    $('[data-numeric]').payment('restrictNumeric');
+                    $('.CCNumber').payment('formatCardNumber');
+                    $('.CCDate').payment('formatCardExpiry');
+                    $('.CCV').payment('formatCardCVC');
+
+                    $.fn.toggleInputError = function (erred) {
+                        this.parent('.editor-field').toggleClass('has-error', erred);
+                        return this;
+                    };
+
+                    $('form').submit(function (e) {
+
+                        var cardType = $.payment.cardType($('#CCNumber').val());
+                        $('#CCNumber').toggleInputError(!$.payment.validateCardNumber($('#CCNumber').val()));
+                        $('#CCDate').toggleInputError(!$.payment.validateCardExpiry($('#CCDate').payment('cardExpiryVal')));
+                        $('#CCV').toggleInputError(!$.payment.validateCardCVC($('#CCV').val(), cardType));
+                        $('.CCBrand').text(cardType);
+
+                        $('.validation').removeClass('text-danger text-success');
+                        $('.validation').addClass($('.has-error').length ? 'text-danger' : 'text-success');
+                        if ($('.has-error').length) {
+                            e.preventDefault();
+                        }
+                        else {
+
+                        }
+                    });
+
+                });
+            </script>
+        </div>
+        <p>
+            <button><span>Submit Order</span></button>
+        </p>
+
+        <input type="hidden" value="1" name="Status" id="Status">
+        <input type="hidden" value="@ViewBag.UserId" name="UserId" id="UserId">
+        <input type="hidden" name="Payment" id="Payment">
+
+        <input type="hidden" name="Cart" id="Cart">
+        <script type="text/javascript">
+            $("#Cart").val(store.getStr("cart"));
+            $("#Payment").val(shoppingCart.total());
+        </script>
+
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

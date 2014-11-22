@@ -1,0 +1,32 @@
+﻿@model IEnumerable<MVc_Assignment2.Product>
+
+@{
+    ViewBag.Title = ViewBag.CatName.Title;
+}
+
+<h2>@ViewBag.CatName.Title</h2>
+
+<div class="container products ">
+    <div class="row ">
+        @foreach (var item in Model)
+        {
+            <div class=" col-md-3 col-sm-6 col-xs-6" data-pid="@item.ProductID"
+                 data-pname="@Html.DisplayFor(modelItem => item.Title)"
+                 data-pprice="@Html.DisplayFor(modelItem => item.Price)"
+                 data-pimage="@Html.DisplayFor(modelItem => item.ImageUrl)">
+                <a href="/MVc_Assignment2/Catalog/Product/@item.ProductID" title="@Html.DisplayFor(modelItem => item.Title) - more details">
+                    <img src="/ClerkUI/@Html.DisplayFor(modelItem => item.ImageUrl)" width="100" height="100" />
+                    <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                </a>
+                <div class="qua">@Html.TextBox("pquantity" + @item.ProductID, 1, new { @class = "pquantity" })</div>
+                <div class="price">Price: <span>@Html.DisplayFor(modelItem => item.Price)</span></div>
+                <button><span>add to cart</span></button>
+            </div>
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to Catalog", "Index")
+</p>
+
+
